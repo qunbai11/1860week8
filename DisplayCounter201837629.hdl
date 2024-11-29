@@ -15,11 +15,14 @@
     // XOR gate to generate loadSignal from inc
     Xor(a=inc, b=false, out=loadSignal);
 
-    // Extract bits from currentCount for the decoder
-    Bit(in=currentCount, sel=3, out=A);
-    Bit(in=currentCount, sel=2, out=B);
-    Bit(in=currentCount, sel=1, out=C);
-    Bit(in=currentCount, sel=0, out=D);
+    // Extract the lower 4 bits of currentCount
+    And(a=currentCount, b[15..4]=false, out=lower4Bits);
+
+    // Map lower 4 bits to individual pins for the decoder
+    And(a=lower4Bits[3], b=true, out=A);
+    And(a=lower4Bits[2], b=true, out=B);
+    And(a=lower4Bits[1], b=true, out=C);
+    And(a=lower4Bits[0], b=true, out=D);
 
     // Decoder for 7-segment display
     Decoder201837629(A=A, B=B, C=C, D=D, a=a, b=b, c=c, d=d, e=e, f=f, g=g);
