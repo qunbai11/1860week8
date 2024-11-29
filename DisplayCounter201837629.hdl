@@ -7,7 +7,7 @@ CHIP DisplayCounter201837629 {
     Inc16(in=Q, out[0..15]=I);               // 16-bit Incrementer to increase the value 
     Mux16(a=I, b=false, sel=reset, out=R);   // Mux to select between incremented value or reset value
     Xor(a=inc, b=reset, out=loadSignal);     // XOR gate to generate load signal
-    0r16(a=Q, b[0..15]=false, out[4..11]=drop, out[3]=A, out[2]=B, out[1]=C, out[0]=D);  // 0R gates for spliting the output value into segments
+    Or16(a=Q, b=false, out[4..11]=drop, out[3]=A, out[2]=B, out[1]=C, out[0]=D);  // Or gates for spliting the output value into segments
     
     Decoder201837629(A=A,B=B,C=C,D=D,a=a,b=b,c=c,d=d,e=e,f=f,g=g);   // Decoder to convert binary input to 7-segment display output
 }
