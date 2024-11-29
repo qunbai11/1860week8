@@ -16,13 +16,10 @@
     Xor(a=inc, b=false, out=loadSignal);
 
     // Extract the lower 4 bits of currentCount
-    And(a=currentCount, b[15..4]=false, out=lower4Bits);
-
-    // Map lower 4 bits to individual pins for the decoder
-    And(a=lower4Bits[3], b=true, out=A);
-    And(a=lower4Bits[2], b=true, out=B);
-    And(a=lower4Bits[1], b=true, out=C);
-    And(a=lower4Bits[0], b=true, out=D);
+    Or(a=currentCount[3], b=false, out=A); // Extract bit 3
+    Or(a=currentCount[2], b=false, out=B); // Extract bit 2
+    Or(a=currentCount[1], b=false, out=C); // Extract bit 1
+    Or(a=currentCount[0], b=false, out=D); // Extract bit 0
 
     // Decoder for 7-segment display
     Decoder201837629(A=A, B=B, C=C, D=D, a=a, b=b, c=c, d=d, e=e, f=f, g=g);
