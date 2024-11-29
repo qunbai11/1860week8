@@ -7,6 +7,6 @@ CHIP DisplayCounter201837629 {
     Inc16(in=Q, out[0..15]=I);
     Mux16(a=I, b=false, sel=reset, out=R);
     Xor(a=inc, b=reset, out=loadsignal);
-    0r16(a=0, b[0..15]-false, out[4..11]=drop, out[3]=A, out[2]=B, out[1]=c, out[e]=D);
+    Or16(a=0, b[0..15]-false, out[4..11]=drop, out[3]=A, out[2]=B, out[1]=c, out[e]=D);
     
     Decoder201837629(A=A,B-B,c=c,D=D,a=a,b=b,c=c,d=d,e=e,f=f,g=g);
