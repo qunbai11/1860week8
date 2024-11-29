@@ -1,13 +1,13 @@
- CHIP DisplayCounter201837629 {
+CHIP DisplayCounter201837629 {
     IN inc, reset;  
     OUT a, b, c, d, e, f, g;
 
     PARTS:
     // Register to store the current count
-    Register(in=nextCount, load=loadSignal, out=currentCount);
+    Register(in=nextCount, load=loadSignal, out=currentCountFull);
 
     // Increment the current count
-    Inc16(in=currentCount, out=incrementedCount);
+    Inc16(in=currentCountFull, out=incrementedCount);
 
     // Mux to select between incremented count or reset (set to 0)
     Mux16(a=incrementedCount, b=false, sel=reset, out=nextCount);
@@ -15,11 +15,14 @@
     // XOR gate to generate loadSignal from inc
     Xor(a=inc, b=false, out=loadSignal);
 
-    // Extract the lower 4 bits of currentCount
-    Or(a=currentCount[3], b=false, out=A); // Extract bit 3
-    Or(a=currentCount[2], b=false, out=B); // Extract bit 2
-    Or(a=currentCount[1], b=false, out=C); // Extract bit 1
-    Or(a=currentCount[0], b=false, out=D); // Extract bit 0
+    // Extract lower 4 bits from currentCountFull into a separate bus
+    And16(a=currentCountFull, b[15..4]=false, out=currentCount);
+
+    // Map lower 4 bits to individual signals for the decoder
+    Or(a=currentCount[3], b=false, out=A);
+    Or(a=currentCount[2], b=false, out=B);
+    Or(a=currentCount[1], b=false, out=C);
+    Or(a=currentCount[0], b=false, out=D);
 
     // Decoder for 7-segment display
     Decoder201837629(A=A, B=B, C=C, D=D, a=a, b=b, c=c, d=d, e=e, f=f, g=g);
