@@ -3,12 +3,24 @@
     OUT a, b, c, d, e, f, g;
 
     PARTS:
+    // Register to store the current count
     Register(in=nextCount, load=loadSignal, out=currentCount);
-    Inc16(in=currentCount, out=incrementedCount);
-    Mux16(a=incrementedCount, b[0..15]=false, sel=reset, out=nextCount);
-    Xor(a=inc,b=reset,out=loadsignal);
-    Or16(a=Q, b=false, out[3]=A, out[2]=B, out[1]=C, out[0]=D);
 
-    // Temporary logic for testing
-    Decoder201837629(A=currentCount[3], B=currentCount[2], C=currentCount[1], D=currentCount[0], a=a, b=b, c=c, d=d, e=e, f=f, g=g);
+    // Increment the current count
+    Inc16(in=currentCount, out=incrementedCount);
+
+    // Mux to select between incremented count or reset (set to 0)
+    Mux16(a=incrementedCount, b=false, sel=reset, out=nextCount);
+
+    // XOR gate to generate loadSignal from inc
+    Xor(a=inc, b=false, out=loadSignal);
+
+    // Extract bits from currentCount for the decoder
+    Bit(in=currentCount, sel=3, out=A);
+    Bit(in=currentCount, sel=2, out=B);
+    Bit(in=currentCount, sel=1, out=C);
+    Bit(in=currentCount, sel=0, out=D);
+
+    // Decoder for 7-segment display
+    Decoder201837629(A=A, B=B, C=C, D=D, a=a, b=b, c=c, d=d, e=e, f=f, g=g);
 }
