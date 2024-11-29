@@ -3,16 +3,10 @@ CHIP DisplayCounter201837629 {
     OUT a, b, c, d, e, f, g;
 
     PARTS:
-    // A 4-bit register to hold the current count
-    Register(in=nextCount, load=load, out=currentCount);
-
-    // Increment the current count
-    Inc16(in=currentCount, out=incrementedCount);
-
-    // Logic to determine whether to increment or reset
-    Mux16(a=incrementedCount, b=false, sel=reset, out=nextCount);
-    Or(a=inc, b=reset, out=load);
-
-    // Decoder to drive the 7-segment display
-    YourDecoder(in=currentCount, out[0]=a, out[1]=b, out[2]=c, out[3]=d, out[4]=e, out[5]=f, out[6]=g);
-}
+    Register(in=R, load=loadsignal, out=Q);
+    Inc16(in=Q, out[0..15]=I);
+    Mux16(a=I, b=false, sel=reset, out=R);
+    Xor(a=inc, b=reset, out=loadsignal);
+    0r16(a=0, b[0..15]-false, out[4..11]=drop, out[3]=A, out[2]=B, out[1]=c, out[e]=D);
+    
+    Decoder201837629(A=A,B-B,c=c,D=D,a=a,b=b,c=c,d=d,e=e,f=f,g=g);
