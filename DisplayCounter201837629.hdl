@@ -1,14 +1,14 @@
-CHIP DisplayCounter201837629 {
-    IN inc, reset;  
+CHIP DisplayCounter201808069 {
+    IN inc, reset;
     OUT a, b, c, d, e, f, g;
 
     PARTS:
     Mux16(a=value, b=false, sel=reset, out=resetValue);
-    Register(in=resetValue, load=true, out[3]=A,out[2]=B, out[1]=c, out[0]=D, out[4..15]=other);
-   
-    Decoder201837629(A=A,
+    Register(in=resetValue, load=true, out[3]=A,out[2]=B, out[1]=C, out[0]=D, out[4..15]=other);
+
+    Decoder201808069(A=A,
                      B=B,
-                     C=C，
+                     C=C,
                      D=D,
                      a=a,
                      b=b,
@@ -19,6 +19,6 @@ CHIP DisplayCounter201837629 {
                      g=g);
 
     And16(a[3]=A, a[2]=B, a[1]=C, a[0]=D, a[4..15]=other, b=true, out=currentValue);
-    Inc16(in=currentValve, out=newValue);
+    Inc16(in=currentValue, out=newValue);
     Mux16(a=currentValue, b=newValue, sel=inc, out=value);
 }
