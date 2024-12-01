@@ -7,7 +7,7 @@ CHIP DisplayCounter201837629 {
     Register(in=resetValue, load=true, out[3]=A,out[2]=B, out[1]=c, out[0]=D, out[4..15]=other);
    
     Decoder201837629(A=A
-                     B=B
+                     B=B,
                      C=C，
                      D=D,
                      a=a,
@@ -15,10 +15,10 @@ CHIP DisplayCounter201837629 {
                      c=c,
                      d=d,
                      e=e,
-                     f=f
+                     f=f,
                      g=g);
 
     And16(a[3]=A, a[2]=B, a[1]=C, a[0]=D, a[4..15]=other, b=true, out=currentValue);
     Inc16(in=currentValve, out=newValue);
     Mux16(a=currentValue, b=newValue, sel=inc, out=value);
-    }
+}
