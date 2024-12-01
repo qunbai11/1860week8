@@ -1,4 +1,4 @@
-CHIP DisplayCounter201808069 {
+CHIP DisplayCounter201837629 {
     IN inc, reset;
     OUT a, b, c, d, e, f, g;
 
@@ -6,7 +6,7 @@ CHIP DisplayCounter201808069 {
     Mux16(a=value, b=false, sel=reset, out=resetValue);
     Register(in=resetValue, load=true, out[3]=A,out[2]=B, out[1]=C, out[0]=D, out[4..15]=other);
 
-    Decoder201808069(A=A,
+    Decoder201837629(A=A,
                      B=B,
                      C=C,
                      D=D,
