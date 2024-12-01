@@ -6,12 +6,12 @@ CHIP DisplayCounter201837629 {
     Mux16(a=value, b=false, sel=reset, out=resetValue);
     Register(in=resetValue, load=true, out[3]=A,out[2]=B, out[1]=c, out[0]=D, out[4..15]=other);
    
-    Decoder201837629(A=A
+    Decoder201837629(A=A,
                      B=B,
                      C=C，
                      D=D,
                      a=a,
-                     b=b 
+                     b=b,
                      c=c,
                      d=d,
                      e=e,
